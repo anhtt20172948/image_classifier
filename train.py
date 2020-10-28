@@ -16,13 +16,13 @@ def train():
     trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                             download=True, transform=transform)
 
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
-                                              shuffle=True, num_workers=0)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=BATCH_SIZE,
+                                              shuffle=True, num_workers=NUM_WORKERS)
 
     testset = torchvision.datasets.CIFAR10(root='./data', train=False,
                                            download=True, transform=transform)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=4,
-                                             shuffle=False, num_workers=0)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=BATCH_SIZE,
+                                             shuffle=False, num_workers=NUM_WORKERS)
 
     print('==> Building model..')
 
