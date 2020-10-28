@@ -10,10 +10,11 @@ if __name__ == '__main__':
     input_image = Image.open(IMG_PATH)
     input_tensor = transform(input_image)
     input_batch = input_tensor.unsqueeze(0)  # create a mini-batch as expected by the model
+    device = torch.device("cuda:{}".format(CUDA_DEVICE) if torch.cuda.is_available() else "cpu")
     model = AlexNet()
     model.classifier[4] = nn.Linear(4096, 1024)
     model.classifier[6] = nn.Linear(1024, 10)
-    model.load_state_dict(torch.load(CHECKPOINT_PATH))
+    model.load_state_dict(torch.load(CHECKPOINT_PATH,map_location=torch.device(device)))
 
     if torch.cuda.is_available():
         input_batch = input_batch.to('cuda')
