@@ -1,9 +1,9 @@
 # Image classification using Alexnet Pytorch on CIFAR-10 dataset
-##Install 
+## Install 
 ```bash
 $ git clone git@github.com:uiui1999vn/image_classifier.git
 ```
-##Requirements
+## Requirements
 ```bash
 $ pip install -r requirements.txt
 ```
