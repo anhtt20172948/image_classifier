@@ -39,7 +39,7 @@ def train():
     AlexNet_model.classifier[6] = nn.Linear(1024, 10)
 
     # Instantiating CUDA device
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:{}".format(CUDA_DEVICE) if torch.cuda.is_available() else "cpu")
 
     # Move the input and AlexNet_model to GPU for speed if available
     AlexNet_model.to(device)
@@ -53,7 +53,7 @@ def train():
     else:
         optimizer = optim.SGD(AlexNet_model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
 
-    for epoch in range(NUM_EPOCHES):  # loop over the dataset multiple times
+    for epoch in range(NUM_EPOCHS):  # loop over the dataset multiple times
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
