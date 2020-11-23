@@ -6,7 +6,7 @@ from utils import transform
 from net.alexNET import alexnet
 import torch.optim as optim
 from config import *
-
+import time
 
 def train():
     # transform = transforms.Compose(
@@ -29,7 +29,7 @@ def train():
     # Get some random training images
     dataiter = iter(trainloader)
     images, labels = dataiter.next()
-    AlexNet_model = alexnet(pretrained=True)
+    AlexNet_model = alexnet(pretrained=False)
     # Model description
 
     # Updating the second classifier
@@ -37,7 +37,7 @@ def train():
     # Updating the third and the last classifier that is the output layer of the network. Make sure to have 10 output
     # nodes if we are going to get 10 class labels through our model.
     AlexNet_model.classifier[6] = nn.Linear(1024, 10)
-
+    print(AlexNet_model)
     # Instantiating CUDA device
     device = torch.device("cuda:{}".format(CUDA_DEVICE) if torch.cuda.is_available() else "cpu")
 
@@ -52,7 +52,8 @@ def train():
         optimizer = optim.Adam(AlexNet_model.parameters(), lr=LEARNING_RATE)
     else:
         optimizer = optim.SGD(AlexNet_model.parameters(), lr=LEARNING_RATE, momentum=MOMENTUM)
-
+    print("START TRAINING..........")
+    start_time = time.time()
     for epoch in range(NUM_EPOCHS):  # loop over the dataset multiple times
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
@@ -76,6 +77,7 @@ def train():
                 running_loss = 0.0
 
     print('Finished Training of AlexNet')
+    print("Total time training: {}".format(time.time() - start_time))
     torch.save(AlexNet_model.state_dict(), SAVE_CHECKPOINT_PATH)
 
 

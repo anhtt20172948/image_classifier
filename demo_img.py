@@ -4,6 +4,7 @@ import torch.nn as nn
 from net.alexNET import AlexNet
 from utils import transform
 from config import *
+import time
 
 if __name__ == '__main__':
 
@@ -20,12 +21,15 @@ if __name__ == '__main__':
         input_batch = input_batch.to('cuda')
         model.to('cuda')
     with torch.no_grad():
+        start_time = time.time()
         output = model(input_batch)
     output = torch.nn.functional.softmax(output[0], dim=0)
     res = torch.max(output).cpu().detach().numpy()
+    print("Test time: {}".format(time.time() - start_time))
     print("images is {} format confidence {}".format(classes[torch.argmax(output)], res))
     d = ImageDraw.Draw(input_image)
     font = ImageFont.truetype('./font/abel-regular.ttf', 90)
     d.text((10, 10), '{}: {} %'.format(classes[torch.argmax(output)], round(float(res), 4) * 100),
            fill=(255, 255, 0), font=font)
+
     input_image.show()
