@@ -31,6 +31,6 @@ if __name__ == '__main__':
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-    print("Total time training: {}".format(time.time() - start_time))
+    print("Total time test: {}".format(time.time() - start_time))
     print('Accuracy of the network on the 10000 test images: %d %%' % (
             100 * correct / total))
