@@ -8,7 +8,7 @@ $ git clone git@github.com:uiui1999vn/image_classifier.git
 $ pip install -r requirements.txt
 ```
 ## Inference
-* Download the pretrained model [here](https://drive.google.com/file/d/1JHYd2d9mdPyhiIv_1oRE8JaM5_6I92bv/view?usp=sharing) and drop it in the `checkpoint` folder
+* Download the pretrained model [here](https://drive.google.com/file/d/1WEbcT8i1_zyUDpfE_9sWnBKWGcSMSVDp/view?usp=sharing) and drop it in the `checkpoint` folder
 ```bash
 $ python demo_img.py
 ```
