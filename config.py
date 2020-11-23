@@ -10,5 +10,5 @@ CUDA_DEVICE = '0'
 
 # For testing
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-IMG_PATH = './images/car.jpg'
+IMG_PATH = './images/horse.jpg'
 CHECKPOINT_PATH = './checkpoint/cifar_net.pth'
