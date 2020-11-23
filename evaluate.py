@@ -18,14 +18,14 @@ if __name__ == '__main__':
     # Instantiating CUDA device
     device = torch.device("cuda:{}".format(CUDA_DEVICE) if torch.cuda.is_available() else "cpu")
     model = AlexNet()
-    model.to(device)
     model.classifier[4] = nn.Linear(4096, 1024)
     model.classifier[6] = nn.Linear(1024, 10)
-    model.load_state_dict(torch.load(PATH, map_location=torch.device(device)))
+    model.to(device)
+    model.load_state_dict(torch.load(CHECKPOINT_PATH, map_location=torch.device(device)))
 
     with torch.no_grad():
         for data in testloader:
-            images, labels = data
+            images, labels = data[0].to(device), data[1].to(device)
             outputs = model(images)
             _, predicted = torch.max(outputs, 1)
             c = (predicted == labels).squeeze()
