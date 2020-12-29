@@ -6,6 +6,7 @@ from utils import transform
 from config import *
 import time
 import matplotlib.pyplot as plt
+from torchsummary import summary
 
 if __name__ == '__main__':
 
@@ -16,6 +17,7 @@ if __name__ == '__main__':
     model = AlexNet()
     model.classifier[4] = nn.Linear(4096, 1024)
     model.classifier[6] = nn.Linear(1024, 10)
+
     model.load_state_dict(torch.load(CHECKPOINT_PATH,map_location=torch.device(device)))
     print(model)
     print(model.state_dict().keys())
@@ -23,6 +25,8 @@ if __name__ == '__main__':
     if torch.cuda.is_available():
         input_batch = input_batch.to('cuda')
         model.to('cuda')
+        summary(model, (3, 227, 227))
+        print(model)
     with torch.no_grad():
         start_time = time.time()
         output = model(input_batch)
