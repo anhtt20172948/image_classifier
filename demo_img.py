@@ -5,6 +5,7 @@ from net.alexNET import AlexNet
 from utils import transform
 from config import *
 import time
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
 
@@ -16,6 +17,8 @@ if __name__ == '__main__':
     model.classifier[4] = nn.Linear(4096, 1024)
     model.classifier[6] = nn.Linear(1024, 10)
     model.load_state_dict(torch.load(CHECKPOINT_PATH,map_location=torch.device(device)))
+    print(model)
+    print(model.state_dict().keys())
 
     if torch.cuda.is_available():
         input_batch = input_batch.to('cuda')
@@ -32,4 +35,5 @@ if __name__ == '__main__':
     d.text((10, 10), '{}: {} %'.format(classes[torch.argmax(output)], round(float(res), 4) * 100),
            fill=(255, 255, 0), font=font)
 
-    input_image.show()
+    plt.imshow(input_image)
+    plt.show()
