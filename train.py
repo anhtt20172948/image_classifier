@@ -82,7 +82,7 @@ def train():
                 running_loss = 0.0
                 correct = 0.0
                 total = 0.0
-        check_point_name = 'cifar_net_epoch {}.pth'.format(epoch + 1)
+        check_point_name = 'cifar_net_epoch_{}.pth'.format(epoch + 1)
         save = os.path.join(SAVE_CHECKPOINT_PATH, check_point_name)
         torch.save(AlexNet_model.state_dict(), save)
 
