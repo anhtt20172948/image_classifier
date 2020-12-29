@@ -7,6 +7,7 @@ from net.alexNET import alexnet
 import torch.optim as optim
 from config import *
 import time
+import os
 
 def train():
     # transform = transforms.Compose(
@@ -56,6 +57,8 @@ def train():
     start_time = time.time()
     for epoch in range(NUM_EPOCHS):  # loop over the dataset multiple times
         running_loss = 0.0
+        correct = 0.0
+        total = 0.0
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data[0].to(device), data[1].to(device)
@@ -68,17 +71,24 @@ def train():
             loss = criterion(output, labels)
             loss.backward()
             optimizer.step()
-
+            _, predicted = torch.max(output.data, 1)
+            correct += (predicted == labels).sum().item()
+            total += labels.size(0)
             # print statistics
             running_loss += loss.item()
             if i % 2000 == 1999:  # print every 2000 mini-batches
-                print('[%d, %5d] loss: %.3f' %
-                      (epoch + 1, i + 1, running_loss / 2000))
+                print('[%d, %5d] loss: %.3f Acc: %d %% '%
+                      (epoch + 1, i + 1, running_loss / 2000, 100 * correct / total))
                 running_loss = 0.0
+                correct = 0.0
+                total = 0.0
+            check_point_name = 'cifar_net_epoch {}.pth'.format(epoch + 1)
+            save = os.path.join(SAVE_CHECKPOINT_PATH, check_point_name)
+            torch.save(AlexNet_model.state_dict(), save)
 
     print('Finished Training of AlexNet')
     print("Total time training: {}".format(time.time() - start_time))
-    torch.save(AlexNet_model.state_dict(), SAVE_CHECKPOINT_PATH)
+
 
 
 if __name__ == '__main__':
